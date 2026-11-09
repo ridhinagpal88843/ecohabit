@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoHabit | Greener Every Day</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f4f7f1;
+  --surface: #ffffff;
+  --ink: #1d3529;
+  --muted: #829087;
+  --green: #26734d;
+  --green-dark: #174b34;
+  --light: #eaf3e9;
+  --border: #e8eee7;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.app {
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 235px 1fr;
+}
+
+.sidebar {
+  background: #fff;
+  padding: 32px 22px;
+  border-right: 1px solid var(--border);
+}
+
+.logo {
+  font: 800 26px 'Outfit', sans-serif;
+  color: var(--green);
+  margin-bottom: 48px;
+}
+
+.logo span { color: var(--ink); }
+
+.nav-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 15px;
+}
+
+.nav-item {
+  padding: 13px;
+  margin: 7px 0;
+  border-radius: 11px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nav-item.active {
+  background: var(--light);
+  color: var(--green);
+}
+
+.sidebar-note {
+  background: #edf5e9;
+  border-radius: 15px;
+  padding: 17px;
+  margin-top: 55px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.main { padding: 35px 5%; }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 38px;
+}
+
+.date-label { color: var(--muted); font-size: 13px; }
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.avatar {
+  width: 39px;
+  height: 39px;
+  background: var(--light);
+  color: var(--green);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+h1 {
+  font: 700 33px 'Outfit', sans-serif;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
+  margin: 30px 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 23px;
+  box-shadow: 0 5px 20px rgba(25,60,35,.025);
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat-number {
+  font: 700 30px 'Outfit', sans-serif;
+  margin-top: 12px;
+}
+
+.hero {
+  background: linear-gradient(120deg,#174b34,#347b50);
+  color: white;
+  border-radius: 21px;
+  padding: 27px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.hero h2 {
+  font: 700 23px 'Outfit', sans-serif;
+  margin: 0 0 8px;
+}
+
+.hero p {
+  color: #d5ead9;
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 430px;
+}
+
+.hero-icon { font-size: 55px; }
+
+.section-title {
+  font: 700 21px 'Outfit', sans-serif;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.habits-section { margin-top: 33px; }
+
+.habit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+  margin-top: 18px;
+}
+
+.habit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  transition: .2s;
+}
+
+.habit.done {
+  background: #f0f7ef;
+  border-color: #b9d9bb;
+}
+
+.habit-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.habit-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--light);
+  font-size: 21px;
+  flex-shrink: 0;
+}
+
+.habit-name { font-weight: 700; font-size: 13px; }
+
+.habit-desc {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.habit button {
+  background: var(--light);
+  color: var(--green);
+  padding: 9px 12px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.habit.done button {
+  background: var(--green);
+  color: white;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+}
+
+button:hover { opacity: .85; }
+
+.progress-section { margin-top: 30px; }
+
+.progress-heading {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin: 18px 0 9px;
+}
+
+.track {
+  background: #eaf0e8;
+  height: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#39895b,#8bc68c);
+  border-radius: 20px;
+  transition: width .3s;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  margin-top: 17px;
+}
+
+.impact-card {
+  padding: 18px;
+  background: #f4f8f1;
+  border-radius: 13px;
+}
+
+.impact-value {
+  font: 700 23px 'Outfit',sans-serif;
+  color: var(--green);
+}
+
+.impact-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 17px;
+}
+
+.badge {
+  background: var(--light);
+  color: var(--green);
+  padding: 10px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge.locked {
+  background: #f0f1ee;
+  color: #a0a69f;
+}
+
+.footer {
+  text-align: center;
+  padding: 35px 0 15px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+@media(max-width:850px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 25px 5%; }
+}
+
+@media(max-width:600px) {
+  h1 { font-size: 27px; }
+  .stats { grid-template-columns: 1fr; }
+  .habit-grid { grid-template-columns: 1fr; }
+  .impact-grid { grid-template-columns: 1fr; }
+  .hero { padding: 21px; }
+  .hero-icon { font-size: 40px; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="logo">Eco<span>Habit.</span></div>
+
+  <div class="nav-label">WORKSPACE</div>
+  <div class="nav-item active">🌿 &nbsp; Dashboard</div>
+  <div class="nav-item">✓ &nbsp; Daily Habits</div>
+  <div class="nav-item">🏆 &nbsp; Achievements</div>
+
+  <div class="sidebar-note">
+    🌍 <strong>Every action counts.</strong><br>
+    Small everyday changes can help build a more sustainable campus.
+  </div>
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="date-label" id="today"></div>
+  <div class="profile">
+    <div class="avatar">E</div>
+    Eco Student
+  </div>
+</header>
+
+<section>
+  <h1>Grow greener every day 🌱</h1>
+  <p class="subtitle">Build sustainable habits and make a difference on campus.</p>
+</section>
+
+<section class="hero">
+  <div>
+    <h2>Make today count!</h2>
+    <p>Choose greener actions, complete your daily challenges and collect EcoPoints along the way.</p>
+  </div>
+  <div class="hero-icon">🌳</div>
+</section>
+
+<section class="stats">
+  <div class="card">
+    <div class="stat-label">🌱 EcoPoints Earned</div>
+    <div class="stat-number" id="points">0</div>
+  </div>
+  <div class="card">
+    <div class="stat-label">✓ Habits Completed Today</div>
+    <div class="stat-number" id="completed">0/6</div>
+  </div>
+  <div class="card">
+    <div class="stat-label">🔥 Current Daily Streak</div>
+    <div class="stat-number" id="streak">0 days</div>
+  </div>
+</section>
+
+<section class="habits-section">
+  <div class="section-title">Today's Green Challenges</div>
+  <div class="section-subtitle">Complete each habit to earn 10 EcoPoints.</div>
+
+  <div class="habit-grid" id="habitList"></div>
+</section>
+
+<section class="card progress-section">
+  <div class="section-title">Your Daily Progress</div>
+
+  <div class="progress-heading">
+    <span>Today's completion</span>
+    <strong id="percent">0%</strong>
+  </div>
+
+  <div class="track">
+    <div class="fill" id="progress"></div>
+  </div>
+
+  <div class="section-title" style="margin-top:28px;font-size:18px">
+    Your Environmental Impact
+  </div>
+  <div class="section-subtitle">
+    Illustrative estimates based on completed actions, not measured savings.
+  </div>
+
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-value" id="plastic">0</div>
+      <div class="impact-label">Reusable bottle actions</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-value" id="water">0</div>
+      <div class="impact-label">Water-saving actions</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-value" id="energy">0</div>
+      <div class="impact-label">Energy-saving actions</div>
+    </div>
+  </div>
+</section>
+
+<section class="card progress-section">
+  <div class="section-title">Your Achievements 🏆</div>
+  <div class="section-subtitle">Unlock badges as you build greener habits.</div>
+
+  <div class="badges" id="badges"></div>
+</section>
+
+<div class="footer">
+  EcoHabit © 2026 | One student. One habit. One greener campus. 🌍
+</div>
+
+</main>
+</div>
+
+<script>
+const KEY = "ecohabit_data";
+
+const habits = [
+  {id:1, icon:"💧", name:"Carry a reusable bottle", desc:"Avoid single-use plastic"},
+  {id:2, icon:"💡", name:"Switch off unused lights", desc:"Save electricity"},
+  {id:3, icon:"🚲", name:"Choose a greener commute", desc:"Walk, cycle or share a ride"},
+  {id:4, icon:"🚰", name:"Save water", desc:"Use water responsibly"},
+  {id:5, icon:"♻️", name:"Segregate your waste", desc:"Recycle and dispose correctly"},
+  {id:6, icon:"🌿", name:"Avoid single-use plastic", desc:"Choose reusable alternatives"}
+];
+
+function todayKey() {
+  const d = new Date();
+  return d.getFullYear() + "-" +
+    String(d.getMonth()+1).padStart(2,"0") + "-" +
+    String(d.getDate()).padStart(2,"0");
+}
+
+let data = JSON.parse(localStorage.getItem(KEY) || "{}");
+
+if (!data.days) data.days = {};
+if (!data.points) data.points = 0;
+if (!data.lastDay) data.lastDay = null;
+if (!data.streak) data.streak = 0;
+
+const key = todayKey();
+
+if (!data.days[key]) data.days[key] = [];
+
+function save() {
+  localStorage.setItem(KEY, JSON.stringify(data));
+}
+
+function renderHabits() {
+  const list = document.getElementById("habitList");
+  list.innerHTML = "";
+
+  const completed = data.days[key];
+
+  habits.forEach(h => {
+    const done = completed.includes(h.id);
+
+    const item = document.createElement("div");
+    item.className = "habit" + (done ? " done" : "");
+
+    const info = document.createElement("div");
+    info.className = "habit-info";
+
+    const icon = document.createElement("div");
+    icon.className = "habit-icon";
+    icon.textContent = h.icon;
+
+    const details = document.createElement("div");
+    const name = document.createElement("div");
+    name.className = "habit-name";
+    name.textContent = h.name;
+
+    const desc = document.createElement("div");
+    desc.className = "habit-desc";
+    desc.textContent = h.desc;
+
+    details.append(name,desc);
+    info.append(icon,details);
+
+    const btn = document.createElement("button");
+    btn.textContent = done ? "✓ Done" : "+ Complete";
+
+    btn.addEventListener("click", () => {
+      if (completed.includes(h.id)) {
+        data.days[key] = completed.filter(id => id !== h.id);
+        data.points = Math.max(0,data.points - 10);
+      } else {
+        data.days[key].push(h.id);
+        data.points += 10;
+      }
+      updateStreak();
+      save();
+      render();
+    });
+
+    item.append(info,btn);
+    list.append(item);
+  });
+}
+
+function updateStreak() {
+  if (data.days[key].length === 0) return;
+
+  if (data.lastDay !== key) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate()-1);
+    const y = yesterday.getFullYear() + "-" +
+      String(yesterday.getMonth()+1).padStart(2,"0") + "-" +
+      String(yesterday.getDate()).padStart(2,"0");
+
+    data.streak = data.lastDay === y ? data.streak + 1 : 1;
+    data.lastDay = key;
+  }
+}
+
+function renderBadges(count) {
+  const achievements = [
+    {name:"🌱 First Step", unlocked:count >= 1},
+    {name:"🌿 Green Beginner", unlocked:count >= 3},
+    {name:"🌳 Eco Champion", unlocked:count >= 6}
+  ];
+
+  const box = document.getElementById("badges");
+  box.innerHTML = "";
+
+  achievements.forEach(a => {
+    const badge = document.createElement("div");
+    badge.className = "badge" + (a.unlocked ? "" : " locked");
+    badge.textContent = a.name + (a.unlocked ? " ✓" : " 🔒");
+    box.append(badge);
+  });
+}
+
+function render() {
+  const count = data.days[key].length;
+  const percent = Math.round(count / habits.length * 100);
+
+  document.getElementById("points").textContent = data.points;
+  document.getElementById("completed").textContent = count + "/6";
+  document.getElementById("streak").textContent = data.streak + " days";
+  document.getElementById("percent").textContent = percent + "%";
+  document.getElementById("progress").style.width = percent + "%";
+
+  // Each completed habit counts as one action.
+  document.getElementById("plastic").textContent =
+    data.days[key].includes(1) || data.days[key].includes(6) ? 1 : 0;
+
+  document.getElementById("water").textContent =
+    data.days[key].includes(4) ? 1 : 0;
+
+  document.getElementById("energy").textContent =
+    data.days[key].includes(2) ? 1 : 0;
+
+  renderBadges(count);
+  renderHabits();
+}
+
+document.getElementById("today").textContent =
+  new Date().toLocaleDateString("en-IN", {
+    weekday:"long",day:"numeric",month:"long",year:"numeric"
+  });
+
+save();
+render();
+</script>
+
+</body>
+</html>
